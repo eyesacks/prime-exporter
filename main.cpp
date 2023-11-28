@@ -1,6 +1,7 @@
 #include <iostream> //cin, cout
 #include <stdlib.h> //calloc, free
-#include <fstream> // fstream
+#include <fstream> //fstream
+#include <ctime> //time()
 
 void swap(unsigned long long *pA, unsigned long long *pB){ //swaps the values at two addresses
     unsigned long long temp = *pA;
@@ -9,7 +10,7 @@ void swap(unsigned long long *pA, unsigned long long *pB){ //swaps the values at
     return;
 }
 
-void export_primes(unsigned long long a, unsigned long long b, std::string filename){
+void export_primes(unsigned long long a, unsigned long long b, unsigned long long *count, std::string filename){
 
     std::ofstream list(filename); //creates new file
 
@@ -20,6 +21,7 @@ void export_primes(unsigned long long a, unsigned long long b, std::string filen
     }
     if(b == 0){
         //deal with a range of [0, 0]
+        *count = 0;
         return;
     }
 
@@ -44,6 +46,7 @@ void export_primes(unsigned long long a, unsigned long long b, std::string filen
 
     list << "total primes = " << tally;
 
+    *count = tally;
     free(numbers);
     list.close();
 
@@ -52,7 +55,7 @@ void export_primes(unsigned long long a, unsigned long long b, std::string filen
 
 int main(){
 
-    unsigned long long a, b, l;
+    unsigned long long a, b, l, tally, t_start, t_end;
     std::string filename;
 
     std::cout << "---Prime Exporter---\nThis program uses the sieve of Eratosthenes to export a list of prime numbers to a file.\n\n";
@@ -71,9 +74,13 @@ int main(){
         filename += ".txt";
     }
 
-    export_primes(a, b, filename);
+    t_start = time(0);
 
-    std::cout << "\nPrimes exported.\n";
+    export_primes(a, b, &tally, filename);
+
+    t_end = time(0);
+
+    std::cout << "\n" << tally << " primes exported in " << t_end - t_start << " seconds.\n";
 
     return 0;
 }
