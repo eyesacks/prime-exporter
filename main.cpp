@@ -52,7 +52,7 @@ void export_primes(unsigned long long a, unsigned long long b, std::string filen
 
 int main(){
 
-    unsigned long long a, b;
+    unsigned long long a, b, l;
     std::string filename;
 
     std::cout << "---Prime Exporter---\nThis program uses the sieve of Eratosthenes to export a list of prime numbers to a file.\n\n";
@@ -64,6 +64,12 @@ int main(){
 
     std::cout << "Enter filename: ";
     getline(std::cin >> std::ws, filename);
+
+    //this ensures that the new file ends in .txt
+    l = filename.length() - 4;
+    if(filename[l] != '.' || filename[l + 1] != 't' || filename[l + 2] != 'x' || filename[l + 3] != 't'){
+        filename += ".txt";
+    }
 
     export_primes(a, b, filename);
 
