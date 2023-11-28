@@ -36,8 +36,10 @@ void export_primes(unsigned long long a, unsigned long long b, unsigned long lon
 
     for(unsigned long long i = 2; i <= b; i++){
         if(!numbers[i]){
-            tally++;
-            list << i << "\n";
+            if(i >= a){
+                tally++;
+                list << i << "\n";
+            }
             for(unsigned long long j = i * 2; j <= b; j += i){
                 numbers[j] = true;
             }
